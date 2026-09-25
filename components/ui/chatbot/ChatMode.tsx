@@ -44,7 +44,7 @@ const RESPONSES: { keywords: string[]; answer: string }[] = [
   },
   {
     keywords: ["hello", "hi", "hey", "start"],
-    answer: "👋 Hello, farmer! I'm your AgriVision assistant. Ask me anything about crop protection, products, delivery, or organic farming. How can I help?",
+    answer: "👋 Hello, farmer! I'm your AgroSphere assistant. Ask me anything about crop protection, products, delivery, or organic farming. How can I help?",
   },
 ];
 
@@ -78,7 +78,7 @@ export function ChatMode({ scanContext, clearContext }: Props) {
     {
       id: "welcome",
       role: "bot",
-      text: "👋 Hi! I'm your AgriVision assistant. Ask me anything about crop protection, products, or smart farming!",
+      text: "👋 Hi! I'm your AgroSphere assistant. Ask me anything about crop protection, products, or smart farming!",
       ts: timestamp(),
     },
   ]);

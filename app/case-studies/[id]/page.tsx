@@ -208,7 +208,7 @@ export default function CaseStudyDetailPage({ params }: { params: Promise<{ id: 
               <div className="relative z-10">
                 <Quote size={64} className="text-green-600/20 mb-8" />
                 <blockquote className="text-2xl md:text-3xl font-bold text-zinc-800 leading-tight mb-12 italic">
-                  "This solution saved my entire crop. I was losing hope after the pest attack, but AgriVision turned it around in just a week. The yield I got was better than last year!"
+                  "This solution saved my entire crop. I was losing hope after the pest attack, but AgroSphere turned it around in just a week. The yield I got was better than last year!"
                 </blockquote>
                 
                 <div className="flex items-center gap-6">

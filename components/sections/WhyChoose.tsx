@@ -24,7 +24,7 @@ const FEATURES = [
   {
     icon: <Users size={40} className="text-blue-500" />,
     title: "Trusted by Farmers",
-    desc: "Join thousands of successful farmers relying on AgriVision's superior crop protection standards."
+    desc: "Join thousands of successful farmers relying on AgroSphere's superior crop protection standards."
   }
 ];
 
@@ -46,7 +46,7 @@ export function WhyChoose() {
             className="text-3xl md:text-4xl text-black mb-4"
             style={{ fontFamily: '"Segoe UI", sans-serif', fontWeight: 800 }}
           >
-            Why Choose <span className="text-[#4CAF50]">AgriVision</span>
+            Why Choose <span className="text-[#4CAF50]">AgroSphere</span>
           </h2>
         </motion.div>
 

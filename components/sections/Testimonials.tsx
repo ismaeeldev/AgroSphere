@@ -17,7 +17,7 @@ const STORY_TESTIMONIALS = [
     avatar: "AK",
     problem: "Persistent aphid infestation was destroying nearly half my wheat crop every season. Conventional sprays weren't working.",
     solution: "Switched to AgriShield Pro based on AI diagnosis. Applied the recommended foliar spray dosage on schedule.",
-    quote: "After using AgriVision, our crop yield increased by 32% in a single season. I couldn't believe the difference.",
+    quote: "After using AgroSphere, our crop yield increased by 32% in a single season. I couldn't believe the difference.",
     result: { label: "Yield Increase", value: "+32%", icon: TrendingUp },
     product: "AgriShield Pro",
     tag: "Pest Control",
@@ -44,7 +44,7 @@ const STORY_TESTIMONIALS = [
     location: "Haryana, IN",
     avatar: "RK",
     problem: "Unpredictable fungal outbreaks in paddy fields after monsoon were causing massive post-harvest losses.",
-    solution: "Used CropGuard Max fungicide after consulting the AgriVision AI chatbot for exact disease diagnosis.",
+    solution: "Used CropGuard Max fungicide after consulting the AgroSphere AI chatbot for exact disease diagnosis.",
     quote: "Fast delivery and expert agriculture support. Their team guided me perfectly to exactly the right fungicide for my paddy.",
     result: { label: "Post-harvest Savings", value: "₹2.3L", icon: TrendingUp },
     product: "CropGuard Max",
@@ -85,7 +85,7 @@ export function Testimonials() {
             Farmers Who <span className="text-[#4CAF50]">Transformed Their Fields</span>
           </h2>
           <p className="text-lg text-foreground/70">
-            Not just reviews — real case studies from real growers who used AgriVision to solve specific crop problems.
+            Not just reviews — real case studies from real growers who used AgroSphere to solve specific crop problems.
           </p>
         </motion.div>
 

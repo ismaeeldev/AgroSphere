@@ -1,10 +1,10 @@
-# AgriVision Premium SaaS Style Guideline
+# AgroSphere Premium SaaS Style Guideline
 
-This document serves as the single source of truth for the visual identity, UI components, and animation behavior of the AgriVision Landing Page. This ensures perfect consistency for future page expansions or feature additions.
+This document serves as the single source of truth for the visual identity, UI components, and animation behavior of the AgroSphere Landing Page. This ensures perfect consistency for future page expansions or feature additions.
 
 ## 1. Color Palette
 
-AgriVision utilizes an earthy, agriculture-inspired palette elevated by high-contrast premium SaaS gradients.
+AgroSphere utilizes an earthy, agriculture-inspired palette elevated by high-contrast premium SaaS gradients.
 
 ### Core Colors
 - **Deep Agriculture Green (Primary Backgrounds / Footers)**
@@ -39,7 +39,7 @@ We prioritize incredibly bold, striking typography to emulate top-tier tech pres
 
 ## 3. Component Architecture & Shapes
 
-AgriVision entirely rejects sharp corners in favor of highly rounded, smooth borders that imply modern safety and biotechnology.
+AgroSphere entirely rejects sharp corners in favor of highly rounded, smooth borders that imply modern safety and biotechnology.
 
 - **Primary Cards (Products, Why Choose)**: 
   - Border Radius: `rounded-2xl`
@@ -63,7 +63,7 @@ The "SaaS feel" is achieved entirely through lighting, drop-shadows, and backgro
 
 ## 5. Animation & Physics (Framer Motion)
 
-Animations are central to AgriVision. They use real-world mass and spring physics to eliminate "snappy" UI jank.
+Animations are central to AgroSphere. They use real-world mass and spring physics to eliminate "snappy" UI jank.
 
 ### Scroll Reveal (General Content)
 - All main contents fade UP into view recursively using the `useScrollReveal` hook.

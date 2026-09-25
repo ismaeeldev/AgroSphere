@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Inter } from "next/font/google";
 import "./globals.css";
-import { ChatbotWidget } from "@/components/ui/ChatbotWidget";
+import { ChatbotFAB } from "@/components/ui/ChatbotFAB";
 import { ClientLayoutWrapper } from "@/components/layout/ClientLayoutWrapper";
 
 const geistSans = Geist({
@@ -15,12 +15,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AgriVision | Smart Crop Protection",
+  title: "AgroSphere | Smart Crop Protection",
   description: "Premium pesticide and crop protection solutions for modern farmers.",
 };
 
 import { CartProvider } from "@/context/CartContext";
 import { ToastProvider } from "@/context/ToastContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -31,12 +32,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${inter.variable} antialiased`}>
         <ToastProvider>
-          <CartProvider>
-            <ClientLayoutWrapper>
-              {children}
-            </ClientLayoutWrapper>
-            <ChatbotWidget />
-          </CartProvider>
+          <AuthProvider>
+            <CartProvider>
+              <ClientLayoutWrapper>
+                {children}
+              </ClientLayoutWrapper>
+              <ChatbotFAB />
+            </CartProvider>
+          </AuthProvider>
         </ToastProvider>
       </body>
     </html>

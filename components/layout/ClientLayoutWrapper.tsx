@@ -6,15 +6,15 @@ import { Footer } from "@/components/layout/Footer";
 
 export function ClientLayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAuthPage = pathname === "/login" || pathname === "/signup";
+  const isFullPage = pathname === "/login" || pathname === "/signup" || pathname === "/chatbot";
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground scroll-smooth">
-      {!isAuthPage && <Navbar />}
+      {!isFullPage && <Navbar />}
       <main className="flex-1">
         {children}
       </main>
-      {!isAuthPage && <Footer />}
+      {!isFullPage && <Footer />}
     </div>
   );
 }

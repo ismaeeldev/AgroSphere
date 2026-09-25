@@ -9,15 +9,47 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Leaf } from "lucide-react";
 
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/context/ToastContext";
+import { useRouter } from "next/navigation";
+
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const { toast } = useToast();
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 1800);
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      login(data.token, data.user);
+      toast("Welcome back! Login successful", "success");
+      router.push("/");
+    } catch (error: any) {
+      toast(error.message || "An error occurred during login", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const containerVariants = {
@@ -94,6 +126,7 @@ export default function LoginPage() {
                 >
                   <Mail className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors duration-200 ${focused === "email" ? "text-[#4CAF50]" : "text-zinc-400"}`} />
                   <Input
+                    name="email"
                     id="email"
                     type="email"
                     placeholder="you@example.com"
@@ -118,6 +151,7 @@ export default function LoginPage() {
                 >
                   <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors duration-200 ${focused === "password" ? "text-[#4CAF50]" : "text-zinc-400"}`} />
                   <Input
+                    name="password"
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"

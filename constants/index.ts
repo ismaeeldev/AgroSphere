@@ -4,7 +4,7 @@ export const NAV_LINKS = [
   { name: "Nearby Help", href: "/nearby-help" },
   { name: "🌱 Farm Results", href: "/case-studies" },
   { name: "🧪 Precision Dose", href: "/precision-dose" },
-  { name: "🌾 Smart Fields", href: "/field-mapping" },
+  // { name: "🌾 Smart Fields", href: "/field-mapping" },
   // { name: "Contact", href: "#contact" },
 ];
 
@@ -14,7 +14,7 @@ export const TESTIMONIALS = [
     name: "Ahmed Khan",
     role: "Wheat Farmer",
     location: "Punjab",
-    content: "AgriVision products helped increase my crop yield significantly. The quality of their pesticides is unmatched.",
+    content: "AgroSphere products helped increase my crop yield significantly. The quality of their pesticides is unmatched.",
     rating: 5,
   },
   {

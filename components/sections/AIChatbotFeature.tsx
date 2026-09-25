@@ -75,7 +75,7 @@ export function AIChatbotFeature() {
                     <Bot className="text-white w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold text-lg">AgriVision AI</h3>
+                    <h3 className="text-white font-bold text-lg">AgroSphere AI</h3>
                     <p className="text-green-300 text-xs flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                       Online - Ready to help

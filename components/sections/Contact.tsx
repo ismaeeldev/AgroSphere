@@ -47,7 +47,7 @@ export function Contact() {
             {[
               { icon: <MapPin className="text-primary" />, title: "Headquarters", desc: "123 Agro Tech Valley, CA 90210" },
               { icon: <Phone className="text-primary" />, title: "Phone", desc: "+1 (800) 123-FARM" },
-              { icon: <Mail className="text-primary" />, title: "Email", desc: "support@agrivision.com" },
+              { icon: <Mail className="text-primary" />, title: "Email", desc: "support@agrosphere.com" },
               { icon: <Clock className="text-primary" />, title: "Support Hours", desc: "Mon-Fri: 8AM - 6PM, Sat: 9AM - 2PM" },
             ].map((info, i) => (
               <div key={i} className="flex flex-row items-start gap-4 p-6 bg-white rounded-2xl shadow-sm border border-border/50 hover:shadow-md transition-shadow">

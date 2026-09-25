@@ -94,7 +94,7 @@ export default function CaseStudiesPage() {
               Real Results from <span className="text-[#4CAF50]">Real Farms</span>
             </h1>
             <p className="text-xl text-zinc-600 mb-8 max-w-xl leading-relaxed">
-              See how farmers transformed crop health using AgriVision solutions. Our data-driven results prove that precision agriculture changes lives.
+              See how farmers transformed crop health using AgroSphere solutions. Our data-driven results prove that precision agriculture changes lives.
             </p>
             <div className="flex flex-wrap gap-4">
               <div className="px-6 py-3 bg-white rounded-2xl shadow-sm border border-zinc-200 flex items-center gap-3">

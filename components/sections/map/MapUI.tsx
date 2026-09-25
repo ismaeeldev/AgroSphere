@@ -142,7 +142,7 @@ export default function MapUI({ userLocation, experts, activeExpert, onSelectExp
 
       </MapContainer>
 
-      {/* Embedded CSS for custom styling of the map to blend it into AgriVision Theme */}
+      {/* Embedded CSS for custom styling of the map to blend it into AgroSphere Theme */}
       <style dangerouslySetInnerHTML={{
         __html: `
         .leaflet-container { background: #fafafa; }

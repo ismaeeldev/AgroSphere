@@ -60,7 +60,7 @@ export function ChatFAQ() {
   const { ref, controls, variants } = useScrollReveal();
   
   const [messages, setMessages] = useState<Message[]>([
-    { id: "welcome", sender: "bot", text: "Hello! I'm your AgriVision Assistant. What would you like to know about our premium crop protection?" }
+    { id: "welcome", sender: "bot", text: "Hello! I'm your AgroSphere Assistant. What would you like to know about our premium crop protection?" }
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -167,7 +167,7 @@ export function ChatFAQ() {
                  <Bot className="text-white w-6 h-6" />
                </div>
                <div>
-                  <h3 className="text-white font-extrabold text-lg">AgriVision Support</h3>
+                  <h3 className="text-white font-extrabold text-lg">AgroSphere Support</h3>
                   <p className="text-green-300 text-xs flex items-center gap-1.5 font-medium">
                     <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_#4CAF50]"></span>
                     Agent Online

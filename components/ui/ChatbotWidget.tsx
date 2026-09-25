@@ -14,7 +14,7 @@ export function ChatbotWidget() {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<ChatbotMode>("chat");
   const [scanContext, setScanContext] = useState<ScanContext | null>(null);
-  
+
   // Smart FAB Hint
   const [hint, setHint] = useState<"chat" | "scan">("chat");
 
@@ -89,13 +89,13 @@ export function ChatbotWidget() {
               style={{ background: "linear-gradient(135deg, #1B5E20, #4CAF50)" }}
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-              
+
               <div className="flex items-center gap-3 relative z-10">
                 <div className="w-10 h-10 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shadow-inner">
                   <Leaf className="w-5 h-5 text-white drop-shadow-sm" />
                 </div>
                 <div>
-                  <p className="text-white font-extrabold text-[15px] leading-none tracking-wide text-shadow-sm">AgriVision AI</p>
+                  <p className="text-white font-extrabold text-[15px] leading-none tracking-wide text-shadow-sm">AgroSphere AI</p>
                   <div className="flex items-center gap-1.5 mt-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse shadow-[0_0_8px_#86efac]" />
                     <span className="text-green-100 text-[10px] font-bold uppercase tracking-widest">Active System</span>
@@ -112,7 +112,7 @@ export function ChatbotWidget() {
 
             {/* Mode Switcher */}
             <div className="bg-gradient-to-b from-[#4CAF50]/5 to-white pb-2 flex-shrink-0">
-               <ModeSwitcher mode={mode} setMode={setMode} />
+              <ModeSwitcher mode={mode} setMode={setMode} />
             </div>
 
             {/* Modes Carousel Container */}
@@ -179,17 +179,17 @@ export function ChatbotWidget() {
               <div className="absolute left-2 w-12 h-12 bg-[#4CAF50]/30 rounded-full blur-[16px] animate-pulse pointer-events-none" />
 
               <div className="relative w-12 h-12 flex-shrink-0 bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] rounded-full flex items-center justify-center shadow-inner">
-                 <AnimatePresence mode="wait">
-                   {hint === "chat" ? (
-                     <motion.div key="icon-chat" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-                       <MessageCircle className="w-5 h-5 text-white" />
-                     </motion.div>
-                   ) : (
-                     <motion.div key="icon-scan" initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0, opacity: 0 }}>
-                       <Camera className="w-5 h-5 text-white" />
-                     </motion.div>
-                   )}
-                 </AnimatePresence>
+                <AnimatePresence mode="wait">
+                  {hint === "chat" ? (
+                    <motion.div key="icon-chat" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
+                      <MessageCircle className="w-5 h-5 text-white" />
+                    </motion.div>
+                  ) : (
+                    <motion.div key="icon-scan" initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0, opacity: 0 }}>
+                      <Camera className="w-5 h-5 text-white" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               <div className="ml-3 overflow-hidden min-w-[75px]">
@@ -204,7 +204,7 @@ export function ChatbotWidget() {
                     </motion.p>
                   )}
                 </AnimatePresence>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-none mt-0.5">AgriVision</p>
+                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-none mt-0.5">AgroSphere</p>
               </div>
             </motion.div>
           )}

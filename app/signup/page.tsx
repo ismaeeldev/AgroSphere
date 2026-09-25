@@ -7,21 +7,60 @@ import { AuthVisual } from "@/components/auth/AuthVisual";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight, Leaf, CheckCircle } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Leaf, CheckCircle } from "lucide-react";
+
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/context/ToastContext";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const { login } = useAuth();
+  const { toast } = useToast();
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (password.length < 5) {
+      toast("Password must be at least 5 characters long", "error");
       setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_BACKEND_URL}/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      // Automatically log in after registration or show success state
+      login(data.token, data.user);
+      toast("Account created successfully!", "success");
       setDone(true);
-    }, 1800);
+      // Wait a bit then redirect
+      setTimeout(() => router.push("/"), 2000);
+    } catch (error: any) {
+      toast(error.message || "An error occurred during registration", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const containerVariants = {
@@ -46,7 +85,7 @@ export default function SignupPage() {
       <div className="hidden lg:block lg:w-[45%] xl:w-1/2 h-screen sticky top-0">
         <AuthVisual
           heading="Protect Your Crops with Intelligence 🌿"
-          subheading="Join 50,000+ farmers who trust AgriVision for smarter crop protection, precision agriculture, and higher yields."
+          subheading="Join 50,000+ farmers who trust AgroSphere for smarter crop protection, precision agriculture, and higher yields."
         />
       </div>
 
@@ -86,7 +125,7 @@ export default function SignupPage() {
                   <CheckCircle className="w-9 h-9 text-[#4CAF50]" />
                 </div>
                 <h2 className="text-2xl font-extrabold text-[#1B5E20]">You're In!</h2>
-                <p className="text-zinc-500 text-sm">Your AgriVision account is ready. Start protecting your crops today.</p>
+                <p className="text-zinc-500 text-sm">Your AgroSphere account is ready. Start protecting your crops today.</p>
                 <Link href="/login">
                   <Button className="mt-2 h-11 px-8 rounded-xl bg-gradient-to-r from-[#2E7D32] to-[#4CAF50] text-white font-bold hover:scale-[1.02] transition-transform">
                     Go to Login
@@ -119,7 +158,7 @@ export default function SignupPage() {
                     <Label htmlFor="name" className="text-sm font-semibold text-zinc-600">Full Name</Label>
                     <div className={wrapperClass("name")}>
                       <User className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${focused === "name" ? "text-[#4CAF50]" : "text-zinc-400"}`} />
-                      <Input id="name" type="text" placeholder="Ahmed Khan" required
+                      <Input name="name" id="name" type="text" placeholder="Ahmed Khan" required
                         className={`pl-10 ${inputClass("name")}`}
                         onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} />
                     </div>
@@ -130,20 +169,9 @@ export default function SignupPage() {
                     <Label htmlFor="email" className="text-sm font-semibold text-zinc-600">Email Address</Label>
                     <div className={wrapperClass("email")}>
                       <Mail className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${focused === "email" ? "text-[#4CAF50]" : "text-zinc-400"}`} />
-                      <Input id="email" type="email" placeholder="you@example.com" required
+                      <Input name="email" id="email" type="email" placeholder="you@example.com" required
                         className={`pl-10 ${inputClass("email")}`}
                         onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} />
-                    </div>
-                  </motion.div>
-
-                  {/* Phone */}
-                  <motion.div variants={itemVariants} className="space-y-1.5">
-                    <Label htmlFor="phone" className="text-sm font-semibold text-zinc-600">Phone Number</Label>
-                    <div className={wrapperClass("phone")}>
-                      <Phone className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${focused === "phone" ? "text-[#4CAF50]" : "text-zinc-400"}`} />
-                      <Input id="phone" type="tel" placeholder="+92 300 0000000"
-                        className={`pl-10 ${inputClass("phone")}`}
-                        onFocus={() => setFocused("phone")} onBlur={() => setFocused(null)} />
                     </div>
                   </motion.div>
 
@@ -152,7 +180,7 @@ export default function SignupPage() {
                     <Label htmlFor="password" className="text-sm font-semibold text-zinc-600">Password</Label>
                     <div className={wrapperClass("password")}>
                       <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${focused === "password" ? "text-[#4CAF50]" : "text-zinc-400"}`} />
-                      <Input id="password" type={showPassword ? "text" : "password"} placeholder="Min. 8 characters" required minLength={8}
+                      <Input name="password" id="password" type={showPassword ? "text" : "password"} placeholder="Min. 5 characters" required minLength={5}
                         className={`pl-10 ${inputClass("password")}`}
                         onFocus={() => setFocused("password")} onBlur={() => setFocused(null)} />
                       <button type="button" onClick={() => setShowPassword(!showPassword)}

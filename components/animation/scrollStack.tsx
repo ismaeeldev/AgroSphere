@@ -10,12 +10,12 @@ interface ScrollStackProps {
 export function ScrollStack({ children }: ScrollStackProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Scroll budget breakdown:
-  //   - Each section gets 100vh of "reading" scroll (the active phase)
-  //   - Each *transition* between sections gets only 40vh (enter/exit animation)
-  //   - Formula: n sections × 100vh  +  (n-1) transitions × 40vh
+  // Reduced scroll budget to make transitions faster and more responsive.
+  //   - Each section gets 40vh of "reading" scroll (the active phase)
+  //   - Each transition gets 30vh
+  //   - Total for 3 sections: 3*40 + 2*30 = 180vh (approx 2 screen heights total)
   const n = children.length;
-  const totalHeightVh = n * 100 + (n - 1) * 40;
+  const totalHeightVh = n * 40 + (n - 1) * 30;
   const totalHeight = `${totalHeightVh}vh`;
 
   const { scrollYProgress } = useScroll({
@@ -24,11 +24,13 @@ export function ScrollStack({ children }: ScrollStackProps) {
   });
 
   // Apply incredibly sleek, floaty physics to make the scroll feel luxurious and cinematic.
+  // Apply ultra-smooth, production-grade physics. 
+  // Lower stiffness and higher damping create a more fluid, "organic" feel.
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 250,
-    damping: 35,
-    mass: 1.2,
-    restDelta: 0.001
+    stiffness: 80,
+    damping: 25,
+    mass: 1,
+    restDelta: 0.0001
   });
 
   return (
@@ -37,7 +39,7 @@ export function ScrollStack({ children }: ScrollStackProps) {
       style={{ height: totalHeight }}
       className="relative w-full"
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#F8FAF8]">
         {children.map((child, index) => {
           return (
             <ScrollStackItem
@@ -80,14 +82,6 @@ function ScrollStackItem({ children, index, total, progress }: ScrollStackItemPr
     return { in: [enterStart, enterEnd, fadeStart, fadeEnd], out: [enterVal, activeVal, activeVal, fadeVal] };
   };
 
-  // When a card is active, we let it scroll its inner content.
-  // To do this, we map the "active" segment of the overall scroll to the card's inner Y translation.
-  // E.g. card 1 is active from `start` to `end`.
-  // As `progress` goes from `start` to `end`, the card's content translates from 0 to -100% (or whatever).
-  // Wait, framer-motion doesn't know the exact pixel height of the child.
-  // A better approach for "read the whole section" without inner scrollbars:
-  // We just let the child BE its natural height. If it's taller than 100vh, the user needs to scroll it.
-
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
@@ -95,18 +89,15 @@ function ScrollStackItem({ children, index, total, progress }: ScrollStackItemPr
   useEffect(() => {
     if (!contentRef.current) return;
 
-    // Initial sizes
     setContentHeight(contentRef.current.scrollHeight);
     setWindowHeight(window.innerHeight);
 
-    // Watch for internal content height changes dynamically (images loading, accordions, etc.)
     const resizeObserver = new ResizeObserver(() => {
       setContentHeight(contentRef.current?.scrollHeight || 0);
       setWindowHeight(window.innerHeight);
     });
 
     resizeObserver.observe(contentRef.current);
-
     const handleResize = () => setWindowHeight(window.innerHeight);
     window.addEventListener("resize", handleResize);
 
@@ -116,55 +107,49 @@ function ScrollStackItem({ children, index, total, progress }: ScrollStackItemPr
     };
   }, [children]);
 
-  // Max distance the content needs to scroll up to be fully read
-  // Removes excessive padding to prevent a gap from appearing below the final section
   const maxScroll = Math.max(0, contentHeight - windowHeight);
 
-  // 1. Scale down when the NEXT card is coming (and blossom up slightly when this one enters)
-  const scaleMap = getMapping(0.95, 1, 0.90);
+  // 1. Scale: Subtle shrink as it goes behind
+  const scaleMap = getMapping(1, 1, 0.92);
   const scale = useTransform(progress, scaleMap.in, scaleMap.out);
 
-  // 2. Fade out when the NEXT card is coming
-  const opacityMap = getMapping(1, 1, 0.1);
+  // 2. Opacity: Remains solid but the overlay handles the "darkening"
+  const opacityMap = getMapping(1, 1, 0.6);
   const opacity = useTransform(progress, opacityMap.in, opacityMap.out);
 
-  // 3. Cinematic Depth: Blur PLUS darken the covered card dramatically so the top card "pops" out visually.
-  const filterMap = getMapping("blur(0px) brightness(1)", "blur(0px) brightness(1)", "blur(16px) brightness(0.4)");
-  const filter = useTransform(progress, filterMap.in, filterMap.out);
+  // 3. Performance Fix: Replace expensive 'filter: blur' with a simple overlay opacity.
+  // This prevents the "fluctuation" and frame drops caused by real-time blurring.
+  const overlayOpacityMap = getMapping(0, 0, 0.7);
+  const overlayOpacity = useTransform(progress, overlayOpacityMap.in, overlayOpacityMap.out);
 
-  // 4. Parallax entrance
-  const yMap = getMapping("130vh", "0vh", "-10vh");
+  // 4. Parallax entrance: From below the screen to center, then slightly sink back.
+  const yMap = getMapping("100vh", "0vh", "-15vh");
   const yOffset = useTransform(progress, yMap.in, yMap.out);
 
-  // 5. INNER Y SCROLLING
-  // While THIS card is the active one, we scroll its inner content upwards
-  // to ensure all the text/images are read natively before the next card arrives.
   const innerProgressRange = [activeStart, activeEnd];
   const innerY = useTransform(progress, innerProgressRange, [0, -maxScroll]);
 
   return (
     <motion.div
-      className="absolute top-0 left-0 w-full h-screen origin-top bg-background"
+      className="absolute top-0 left-0 w-full h-screen origin-top will-change-transform"
       style={{
         scale,
         opacity,
         y: yOffset,
-        filter,
         zIndex: index,
-        // Optional: add a tiny drop shadow to separate stacked cards
-        boxShadow: index > 0 ? "0 -20px 40px rgba(0,0,0,0.1)" : "none"
       }}
     >
-      {/* 
-        This is the actual "canvas" of the card.
-        We translate it UP (innerY) as the user scrolls, mathematically allowing them to read the whole section before the next card stacks over it. 
-        Added an extreme top-side shadow to physically separate the layering planes dynamically.
-      */}
       <motion.div
         ref={contentRef}
-        className="w-full h-auto will-change-transform rounded-t-[40px] shadow-[0_-30px_80px_rgba(0,0,0,0.15)] bg-background border-t border-white/20"
+        className="w-full h-auto will-change-transform rounded-t-[3rem] shadow-[0_-40px_100px_rgba(0,0,0,0.12)] bg-white border-t border-white/40 relative overflow-hidden"
         style={{ y: innerY }}
       >
+        {/* Performance Overlay: Fades in to darken the card when it goes behind the stack */}
+        <motion.div 
+          className="absolute inset-0 bg-[#0A1F0B] pointer-events-none z-50"
+          style={{ opacity: overlayOpacity }}
+        />
+        
         {children}
       </motion.div>
     </motion.div>

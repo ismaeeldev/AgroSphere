@@ -61,7 +61,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/50">
-          <p>© {new Date().getFullYear()} AgriVision. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} AgroSphere. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>

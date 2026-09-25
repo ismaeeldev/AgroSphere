@@ -1,14 +1,14 @@
-# AgriVision App Guideline (Premium + Consistent)
+# AgroSphere App Guideline (Premium + Consistent)
 
 Last updated: 2026-04-24
 
-This is the implementation guide for developers building AgriVision experiences from this project. It is now aligned with the current codebase and focused on one goal:
+This is the implementation guide for developers building AgroSphere experiences from this project. It is now aligned with the current codebase and focused on one goal:
 
 Build a premium agritech product with consistent visual language, motion behavior, and feature parity.
 
 ## 1. Product Intent
 
-AgriVision is a premium agritech platform that combines:
+AgroSphere is a premium agritech platform that combines:
 
 1. Crop protection commerce
 2. AI-assisted crop diagnosis
@@ -305,8 +305,8 @@ Every new feature/page must pass:
 
 If a developer is unsure between two design options, choose the one that is:
 
-1. More consistent with existing AgriVision pages
+1. More consistent with existing AgroSphere pages
 2. More premium in depth and motion
 3. More readable and trustworthy for farmers
 
-Consistency is a product feature in AgriVision, not a cosmetic preference.
+Consistency is a product feature in AgroSphere, not a cosmetic preference.

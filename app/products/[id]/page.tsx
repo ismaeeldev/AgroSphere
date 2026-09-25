@@ -12,12 +12,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: 'Product Not Found | AgriVision',
+      title: 'Product Not Found | AgroSphere',
     };
   }
 
   return {
-    title: `${product.name} | AgriVision`,
+    title: `${product.name} | AgroSphere`,
     description: product.description,
   };
 }

@@ -101,7 +101,7 @@ export function Hero() {
             </motion.h1>
 
             <motion.p variants={itemVariants} className="text-lg md:text-xl text-foreground/70 max-w-xl mb-8 leading-relaxed">
-              AgriVision provides trusted pesticide and crop protection solutions used by farmers worldwide to ensure healthier, stronger yields.
+              AgroSphere provides trusted pesticide and crop protection solutions used by farmers worldwide to ensure healthier, stronger yields.
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
